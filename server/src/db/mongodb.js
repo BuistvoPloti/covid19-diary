@@ -11,7 +11,7 @@ const initMongoDb = () => {
       useUnifiedTopology: true,
     })
     .then(() => {
-      log("DB connected!");
+      log("Mongodb connected successfully");
     });
 };
 
