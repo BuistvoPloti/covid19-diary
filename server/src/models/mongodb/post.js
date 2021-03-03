@@ -66,6 +66,11 @@ const PostSchema = new Schema({
     type: Date,
     required: true,
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User"
+  }
 });
 
 //plugins.prettifyRecords(UserSchema);
