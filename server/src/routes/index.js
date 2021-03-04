@@ -1,9 +1,7 @@
 const router = require("express").Router();
-// import routes here
+const users = require("./users/users");
 
-router.use("/test", (req, res, next) => {
-  res.send("hello, world")
-});
+router.use("/users", users);
 
 // add other routes here
 
