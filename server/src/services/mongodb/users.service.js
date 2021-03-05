@@ -1,12 +1,12 @@
 const User = require("../../models/mongodb/user");
 const jwt = require("jsonwebtoken");
+const { throwCustomException } = require("../../utils/response-helpers");
 
 const signUp = async (login, password) => {
-  await User.findOne({ login: login }).exec((err, existing_user) => {
-    if (existing_user) {
-      throw new Error("login already exists");
-    }
-  });
+  const userExists = await User.exists({ login });
+  if (userExists) {
+    throwCustomException("Login already registered");
+  }
 
   const userBody = {
     login,
@@ -16,39 +16,35 @@ const signUp = async (login, password) => {
     infected_at: null,
     friends: null,
   };
-  const user = new User(userBody);
-  user.save((err, savedUser) => {
-    if (err) {
-      console.log('Save user in account activation error');
-      throw new Error("Error while saving to database");
-    }
-  });
-  return {
-    message: 'Sign up success'
-  }
+  const user = !userExists && await new User(userBody);
+  return user && user.save();
 };
 
-const signIn = (req, res, next) => { // refactor and move to handlers some logic
-  const { login, password } = req.body;
-  User.findOne({login}).exec((err, user) => {
-    if (err || !user) {
-      return res.status(400).json({
-        error: 'User with that login does not exist'
-      });
-    }
-    if (!user.authenticate(password)) {
-      return res.status(400).json({
-        error: 'login or password are incorrect'
-      });
-    }
-    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
-    const { _id, login, vaccinated, infected, infected_at, friends, createdAt, updatedAt } = user;
+const signIn = async (userLogin, password) => {
+  const user = await User.findOne({ login: userLogin });
 
-    return res.json({
-      token,
-      user: { _id, login, vaccinated, infected, infected_at, friends, createdAt, updatedAt }
-    });
-  });
+  if (!user) {
+    throwCustomException("User with that login does not exist")
+  }
+
+  if (!user.authenticate(password)) {
+    throwCustomException("Incorrect login or password")
+  }
+
+  const access_token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET, { expiresIn: "7d" } );
+  const { _id, login, vaccinated, infected, infected_at, friends, createdAt, updatedAt } = user;
+
+  return {
+    access_token,
+    id: _id,
+    login,
+    vaccinated,
+    infected,
+    infected_at,
+    friends,
+    createdAt,
+    updatedAt
+  };
 };
 
 module.exports = {

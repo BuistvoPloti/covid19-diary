@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const schemaMethods = require("../../utils/mongodb.utils");
-//const plugins = require("../../utils/mongoose.plugins");
+const plugins = require("../../utils/mongoose-plugins");
 
 const UserSchema = new Schema({
   login: {
@@ -33,7 +33,7 @@ const UserSchema = new Schema({
   }
 }, {timestamps: true});
 
-//plugins.prettifyRecords(UserSchema);
+plugins.prettifyRecords(UserSchema);
 
 UserSchema
   .virtual("password")
