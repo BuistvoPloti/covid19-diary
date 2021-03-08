@@ -8,6 +8,7 @@ const routes = require("./routes");
 const {
   application: { baseURL, secret },
 } = require("./config");
+const { resourceNotFoundHandler, errorHandler } = require("./middlewares/errors");
 
 const app = express();
 
@@ -29,5 +30,7 @@ app.use(
   })
 );
 app.use("/", routes);
+app.use(resourceNotFoundHandler);
+app.use(errorHandler);
 
 module.exports = app;
