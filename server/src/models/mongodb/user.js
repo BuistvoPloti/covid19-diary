@@ -31,7 +31,7 @@ const UserSchema = new Schema({
     ref: "User", //should work
     default: null,
   }
-}, {timestamps: true});
+}, { timestamps: true });
 
 plugins.prettifyRecords(UserSchema);
 

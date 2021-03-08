@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-//const plugins = require("../../utils/mongoose.plugins");
+const plugins = require("../../utils/mongoose-plugins");
 
 const PostSchema = new Schema({
   fever: {
@@ -62,17 +62,23 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  created_at: {
-    type: Date,
-    required: true,
-  },
   user_id: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User"
-  }
-});
+  },
+  reactions: {
+    type: [
+      {
+        users_ids: [Schema.Types.ObjectId],
+        reaction: String
+      }
+    ],
+    ref: "User",
+    default: null
+  },
+}, { timestamps: true });
 
-//plugins.prettifyRecords(UserSchema);
+plugins.prettifyRecords(PostSchema);
 
 module.exports = model("Post", PostSchema);
