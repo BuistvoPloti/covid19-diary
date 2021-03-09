@@ -18,6 +18,14 @@ const UserSchema = new Schema({
     type: Date,
     default: null,
   },
+  cured_at: {
+    type: Date,
+    default: null,
+  },
+  cured: {
+    type: Boolean,
+    default: null,
+  },
   infected: {
     type: Boolean,
     default: null,
@@ -26,10 +34,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: null,
   },
-  friends: {
+  followed_users: {
     type: [Schema.Types.ObjectId],
     ref: "User", //should work
-    default: null,
+    default: [],
   }
 }, { timestamps: true });
 

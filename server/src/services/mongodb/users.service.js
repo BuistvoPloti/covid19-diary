@@ -14,7 +14,7 @@ const signUp = async (login, password) => {
     infected: false,
     vaccinated: false,
     infected_at: null,
-    friends: null,
+    followed_users: null,
   };
   const user = !userExists && await new User(userBody);
   return user && user.save();
@@ -32,7 +32,7 @@ const signIn = async (userLogin, password) => {
   }
 
   const access_token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET, { expiresIn: "7d" } );
-  const { _id, login, vaccinated, infected, infected_at, friends, createdAt, updatedAt } = user;
+  const { _id, login, vaccinated, infected, infected_at, followed_users, createdAt, updatedAt } = user;
 
   return {
     access_token,
@@ -41,13 +41,97 @@ const signIn = async (userLogin, password) => {
     vaccinated,
     infected,
     infected_at,
-    friends,
+    followed_users,
     createdAt,
     updatedAt
   };
 };
 
+const startQuarantine = async (userId) => {
+  return await User.findOneAndUpdate(
+    {
+      _id: userId
+    },
+    {
+      infected: true,
+      infected_at: new Date(),
+    },
+    {
+      new: true,
+    }
+  );
+};
+
+const endQuarantine = async (userId) => {
+  return await User.findOneAndUpdate(
+    {
+      _id: userId
+    },
+    {
+      infected: false,
+      cured: true,
+      cured_at: new Date(),
+    },
+    {
+      new: true,
+    }
+  );
+};
+
+const vaccinateUser = async (userId) => {
+  return await User.findOneAndUpdate(
+    {
+      _id: userId
+    },
+    {
+      vaccinated: true,
+    },
+    {
+      new: true,
+    }
+  )
+};
+
+const followUser = async (currentUserId, followedUserId) => {
+  return await User.findOneAndUpdate(
+    {
+      _id: currentUserId,
+    },
+    {
+      $push: {
+        followed_users: followedUserId,
+      }
+    },
+    {
+      new: true,
+      upsert: true
+    },
+  )
+};
+
+const unfollowUser = async (currentUserId, followedUserId) => {
+  return await User.findOneAndUpdate(
+    {
+      _id: currentUserId,
+    },
+    {
+      $pull: {
+        followed_users: { $in: [followedUserId] },
+      }
+    },
+    {
+      new: true,
+      upsert: true,
+    },
+  )
+};
+
 module.exports = {
   signUp,
   signIn,
+  startQuarantine,
+  endQuarantine,
+  vaccinateUser,
+  followUser,
+  unfollowUser,
 };

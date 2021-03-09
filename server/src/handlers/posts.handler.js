@@ -23,7 +23,7 @@ const createPost = async (req, res, next) => {
 const handleTogglePostReaction = async (req, res, next) => {
   try {
     const reaction = req.body.reaction;
-    const post_id = req.body.id;
+    const post_id = req.body.postId;
     const user_id = req.body.reactedUserId;
     const reactionsBody = { reaction, post_id, user_id };
     const userReactions = await postsService

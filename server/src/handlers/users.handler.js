@@ -38,7 +38,69 @@ const signIn = async (req, res, next) => {
   }
 };
 
+const startQuarantine = async (req, res, next) => {
+  try {
+    //const userId = req.body;
+    const userId = req.params.id;
+    const quarantineData = await usersService.startQuarantine(userId);
+    return handleSuccessResponse({ user: quarantineData }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const endQuarantine = async (req, res, next) => {
+  try {
+    //const userId = req.body;
+    const userId = req.params.id;
+    const quarantineData = await usersService.endQuarantine(userId);
+    return handleSuccessResponse({ user: quarantineData }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const vaccinateUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const vaccinatedUser = await usersService.vaccinateUser(userId);
+    return handleSuccessResponse({ user: vaccinatedUser }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const followUser = async (req, res, next) => {
+  try {
+    const { currentUserId, followedUserId } = req.body;
+    const user = await usersService.followUser(currentUserId, followedUserId);
+    return handleSuccessResponse({ user }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const unfollowUser = async (req, res, next) => {
+  try {
+    const { currentUserId, followedUserId } = req.body;
+    const user = await usersService.unfollowUser(currentUserId, followedUserId);
+    return handleSuccessResponse({ user }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
+  startQuarantine,
+  endQuarantine,
+  vaccinateUser,
+  followUser,
+  unfollowUser
 };
