@@ -2,6 +2,15 @@ const router = require("express").Router();
 const users = require("../../handlers/users.handler");
 
 //TODO add validation middleware + implement one for auth protection
+
+router
+  .route("/")
+  .get(users.getUsers);
+
+router
+  .route("/:login")
+  .get(users.getUserByLogin);
+
 router
   .route("/signup")
   .post(users.signUp);

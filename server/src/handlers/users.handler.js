@@ -95,6 +95,27 @@ const unfollowUser = async (req, res, next) => {
   }
 };
 
+const getUserByLogin = async (req, res, next) => {
+  try {
+    const { login } = req.params;
+    const user = await usersService.getUserByLogin(login);
+    return handleSuccessResponse({ user }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const getUsers = async (req, res, next) => {
+  try {
+    const users = await usersService.getUsers();
+    return handleSuccessResponse({ users }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -102,5 +123,7 @@ module.exports = {
   endQuarantine,
   vaccinateUser,
   followUser,
-  unfollowUser
+  unfollowUser,
+  getUserByLogin,
+  getUsers
 };

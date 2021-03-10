@@ -46,7 +46,31 @@ const handleTogglePostReaction = async (req, res, next) => {
   }
 };
 
+const getPostById = async (req, res, next) => {
+  try {
+    const post_id = req.params.id;
+    const post = await postsService.getPostById(post_id);
+    return handleSuccessResponse({ post }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
+const getUserPosts = async (req, res, next) => {
+  try {
+    const user_id = req.params.id;
+    const posts = await postsService.getUserPosts(user_id);
+    return handleSuccessResponse({ posts }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
 module.exports = {
   createPost,
-  handleTogglePostReaction
+  handleTogglePostReaction,
+  getPostById,
+  getUserPosts,
 };

@@ -126,6 +126,14 @@ const unfollowUser = async (currentUserId, followedUserId) => {
   )
 };
 
+const getUserByLogin = async (login) => {
+  return await User.findOne({ login: login });
+};
+
+const getUsers = async () => {
+  return await User.find();
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -134,4 +142,6 @@ module.exports = {
   vaccinateUser,
   followUser,
   unfollowUser,
+  getUserByLogin,
+  getUsers
 };

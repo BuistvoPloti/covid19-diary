@@ -129,11 +129,21 @@ const getPostReactions = async (post_id) => {
   return postReactionsQuery.reactions;
 };
 
+const getPostById = async (post_id) => {
+  return await Post.findOne({ _id: post_id });
+};
+
+const getUserPosts = async (user_id) => {
+  return await Post.find({ user_id })
+};
+
 module.exports = {
   createPost,
   toggleAddNewPostReaction,
   toggleAddExistingPostReaction,
   toggleRemovePostReaction,
   checkIfUserBelongsToPostReactions,
-  isReactionPresentInPost
+  isReactionPresentInPost,
+  getPostById,
+  getUserPosts
 };
