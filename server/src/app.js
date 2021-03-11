@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cookieEncrypter = require("cookie-encrypter");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const { mongodb: { databaseURI } } = require("./config");
 const routes = require("./routes");
 const {
   application: { baseURL, secret },
@@ -27,6 +29,7 @@ app.use(
     secret: secret,
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: databaseURI })
   })
 );
 app.use("/", routes);

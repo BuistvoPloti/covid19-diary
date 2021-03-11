@@ -9,6 +9,12 @@ const UserSchema = new Schema({
     unique: true,
     max: 24
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    max: 64
+  },
   hashed_password: {
     type: String,
     required: true

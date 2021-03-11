@@ -1,8 +1,8 @@
 const User = require("../../models/mongodb/user");
-const jwt = require("jsonwebtoken");
+const { generateToken } = require("../../utils/security.utils");
 const { throwCustomException } = require("../../utils/response-helpers");
 
-const signUp = async (login, password) => {
+const signUp = async (login, email, password) => {
   const userExists = await User.exists({ login });
   if (userExists) {
     throwCustomException("Login already registered");
@@ -11,6 +11,7 @@ const signUp = async (login, password) => {
   const userBody = {
     login,
     password,
+    email,
     infected: false,
     vaccinated: false,
     infected_at: null,
@@ -31,13 +32,15 @@ const signIn = async (userLogin, password) => {
     throwCustomException("Incorrect login or password")
   }
 
-  const access_token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET, { expiresIn: "7d" } );
-  const { _id, login, vaccinated, infected, infected_at, followed_users, createdAt, updatedAt } = user;
+  //const access_token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET, { expiresIn: "7d" } );
+  const access_token = generateToken();
+  const { _id, login, email, vaccinated, infected, infected_at, followed_users, createdAt, updatedAt } = user;
 
   return {
     access_token,
     id: _id,
     login,
+    email,
     vaccinated,
     infected,
     infected_at,

@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const users = require("../../handlers/users.handler");
+const { authProtection } = require("../../middlewares/auth"); // add to some routes in dev mode later
 
-//TODO add validation middleware + implement one for auth protection
+//TODO add validation via express-validator
 
 router
   .route("/")
-  .get(users.getUsers);
+  .get(authProtection, users.getUsers);
 
 router
   .route("/:login")
@@ -18,6 +19,10 @@ router
 router
   .route("/signin")
   .post(users.signIn);
+
+router
+  .route("/signout")
+  .delete(authProtection, users.signOut);
 
 router
   .route("/:id/start-quarantine")

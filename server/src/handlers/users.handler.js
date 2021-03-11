@@ -1,5 +1,6 @@
 const usersService = require("../services/mongodb/users.service");
 const { authenticateRequest } = require("../utils/auth.utils");
+const { log } = require("../utils/logger.utils");
 const {
   handleSuccessResponse,
   handleErrorResponse,
@@ -7,8 +8,8 @@ const {
 
 const signUp = async (req, res, next) => {
   try {
-    const { login, password } = req.body;
-    const user = await usersService.signUp(login, password);
+    const { login, password, email } = req.body;
+    const user = await usersService.signUp(login, email, password);
     return handleSuccessResponse({ user }, res);
   } catch (err) {
     handleErrorResponse(res, err);
@@ -18,8 +19,8 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   if (req.session.isAuthenticated) {
-    res.redirect("http://some_url");
-    return next({ message: "Already signed in"});
+    log("Already signed in");
+    return res.redirect("https://google.com");
   }
 
   try {
@@ -36,6 +37,13 @@ const signIn = async (req, res, next) => {
     handleErrorResponse(res, err);
     return next(err);
   }
+};
+
+const signOut = (req, res, next) => {
+  res.clearCookie("access_token");
+  res.clearCookie("connect.sid");
+  req.session.destroy();
+  return res.status(204).send("logged out");
 };
 
 const startQuarantine = async (req, res, next) => {
@@ -119,6 +127,7 @@ const getUsers = async (req, res, next) => {
 module.exports = {
   signUp,
   signIn,
+  signOut,
   startQuarantine,
   endQuarantine,
   vaccinateUser,
