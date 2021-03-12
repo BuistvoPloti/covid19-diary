@@ -1,0 +1,109 @@
+<html>
+<head>
+    <style type='text/css'>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            color: black;
+            display: table;
+            font-family: sans-serif;
+            font-size: 24px;
+            text-align: center;
+        }
+        .container {
+            border: 20px solid tan;
+            width: 760px;
+            height: 1122px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .logo {
+            color: tan;
+        }
+
+        .marquee {
+            margin-top:200px;
+            color: tan;
+            font-size: 48px;
+        }
+        .assignment {
+            margin: 20px;
+        }
+        .person {
+            border-bottom: 2px solid black;
+            font-size: 32px;
+            font-style: italic;
+            margin: 20px auto;
+            width: 400px;
+        }
+        .reason {
+            margin: 20px;
+        }
+        .signarute{
+            width:100px;
+            float: left;
+            margin-top: 172px;
+            margin-left: 10px;
+        }
+        .stamp {
+            width:200px;
+            float: right;
+            margin-right: 24px;
+            margin-top: 120px;
+        }
+        .date-signed {
+            float: left;
+            margin-top: 200px;
+            margin-left: 70px;
+        }
+        .disclaimer {
+            padding-top: 400px;
+            font-size: 10px;
+            color: rgb(163,163,163);
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="marquee">
+        COVID-19 Certification
+    </div>
+
+    <div class="assignment">
+        Certificate no: CD-345324
+    </div>
+
+    <div class="assignment">
+        Ilness period: 26.02.2021 - 06.03.2021
+    </div>
+
+    <div class="assignment">
+        This certificate is presented to
+    </div>
+
+    <div class="person">
+        <%= name %>
+    </div>
+
+    <div class="reason">
+    </div>
+    <div>
+        <div class="date-sig">
+            <h4 class="date-signed">
+                06.03.2021
+            </h4>
+            <img class="signarute" src="https://i.imgur.com/zAdltcW.jpeg" alt="">
+        </div>
+
+        <img class="stamp" src="https://i.imgur.com/UQDvb61.jpeg" alt="">
+    </div>
+    <div class="disclaimer">
+        This certificate is not from a trusted authority
+    </div>
+
+</div>
+</body>
+</html>

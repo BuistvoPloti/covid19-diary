@@ -15,7 +15,6 @@
     "cookie-encrypter": "^1.0.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "emoji-unicode": "^2.0.1",
     "express": "^4.17.1",
@@ -24,8 +23,10 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "mongoose": "^5.11.15",
+    "node-pdf-report": "^1.1.0",
     "pino": "^6.7.0",
-    "pino-pretty": "^4.5.0"
+    "pino-pretty": "^4.5.0",
+    "puppeteer": "^8.0.0"
   },
   "devDependencies": {
     "eslint": "^7.14.0",
