@@ -34,7 +34,10 @@ const signIn = async (userLogin, password) => {
 
   //const access_token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET, { expiresIn: "7d" } );
   const access_token = generateToken();
-  const { _id, login, email, vaccinated, infected, infected_at, followed_users, createdAt, updatedAt } = user;
+  const {
+    _id, login, email, vaccinated, infected,
+    infected_at, followed_users, createdAt,
+    updatedAt, cured, cured_at } = user;
 
   return {
     access_token,
@@ -46,7 +49,9 @@ const signIn = async (userLogin, password) => {
     infected_at,
     followed_users,
     createdAt,
-    updatedAt
+    updatedAt,
+    cured,
+    cured_at
   };
 };
 
@@ -133,11 +138,16 @@ const getUserByLogin = async (login) => {
   return await User.findOne({ login: login });
 };
 
+const getUserById = async (id) => {
+  return await User.findOne({ _id: id });
+};
+
 const getUsers = async () => {
   return await User.find();
 };
 
 module.exports = {
+  getUserById,
   signUp,
   signIn,
   startQuarantine,

@@ -22,7 +22,6 @@ const signIn = async (req, res, next) => {
     log("Already signed in");
     return res.redirect("https://google.com");
   }
-
   try {
     const { login, password } = req.body;
     const user = await usersService.signIn(login, password);
@@ -114,6 +113,17 @@ const getUserByLogin = async (req, res, next) => {
   }
 };
 
+const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await usersService.getUserById(id);
+    return handleSuccessResponse({ user }, res);
+  } catch (err) {
+    handleErrorResponse(res, err);
+    return next(err);
+  }
+};
+
 const getUsers = async (req, res, next) => {
   try {
     const users = await usersService.getUsers();
@@ -125,6 +135,7 @@ const getUsers = async (req, res, next) => {
 };
 
 module.exports = {
+  getUserById,
   signUp,
   signIn,
   signOut,

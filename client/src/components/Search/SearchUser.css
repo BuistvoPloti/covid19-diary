@@ -1,0 +1,19 @@
+.user-search {
+    padding: 24px 0 24px 0;
+    width: 320px;
+    border: 1px solid #C7C7CC;
+    border-radius: 16px;
+    margin-bottom: 24px;
+}
+
+.user-search__input input{
+    width: 248px;
+    height:28px;
+    border-radius: 16px;
+    border:1px solid #F3F2F8;
+    background-color: #F3F2F8;
+}
+
+.user-search__input{
+    text-align:center
+}

@@ -1,0 +1,7 @@
+.navbar {
+    flex: 0.25;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: 330px;
+}

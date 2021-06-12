@@ -20,7 +20,7 @@ const handleErrorResponse = (res, error, code) => {
       detail,
     }],
   };
-  handleResponse(res, status, responseBody);
+  handleResponse(res, status, responseBody); //make return
 };
 
 const throwCustomException = (message) => {

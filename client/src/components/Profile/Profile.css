@@ -1,0 +1,48 @@
+.profile {
+    flex: 0 1 80%;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 15px;
+}
+.profile-photo {
+    border-radius: 50%;
+    overflow: hidden;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 12px;
+}
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profile-info {
+    font-size: 18px;
+    line-height: 19px;
+    flex: 0 1 auto;
+    margin: 0 0 0 30px;
+    padding: 15px 0 0 0;
+}
+.profile-nickname {
+    font-size: 16px;
+    line-height: 18.75px;
+    color: #33333373;
+}
+
+.profile-caption {
+    word-break: break-word;
+    max-width: 400px;
+    line-height: 24px;
+    font-size: 18px;
+    margin-top: 29px;
+}
+
+.profile-stats {
+    font-size: 18px;
+    margin-top: 37px;
+}
+
+.profile-stats span{
+    line-height: 24px;
+    margin-right: 24px;
+}

@@ -9,6 +9,10 @@ router
   .get(authProtection, users.getUsers);
 
 router
+  .route("/qqq/:id")
+  .get(users.getUserById);
+
+router
   .route("/:login")
   .get(users.getUserByLogin);
 
