@@ -45,6 +45,9 @@ export const postsAPI = {
   },
   createPost(postData) {
     return axiosIns(source).post('/posts', { ...postData })
+  },
+  reactWithEmoji(reactionData) {
+    return axiosIns(source).post('/posts/reaction', { ...reactionData })
   }
 }
 

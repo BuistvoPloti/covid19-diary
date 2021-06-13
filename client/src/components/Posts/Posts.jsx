@@ -1,10 +1,74 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import Picker from "emoji-picker-react";
 import "./Posts.css";
+import {postsAPI} from "../../api/api";
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, getUserPosts, ...props}) => {
   const [colors, _setColors] = useState([
     '#FF3B30', '#FFCC00', '#5AC8FA',
     '#AF52DE', '#FF9500', '#34C759']);
+
+  const [toggledPickers, setToggledPickers] = useState([])
+
+  const [reactions, setReactions] = useState([])
+
+  useEffect(() => {
+    const shapedReactions = []
+    posts.forEach((it) => {
+      shapedReactions.push({reactions: it.reactions, postId: it.id, userId: it.user_id})
+    })
+    setReactions(shapedReactions)
+  }, [])
+
+  const onEmojiClick = (event, emojiObject, post) => {
+    const postBody = {
+      reaction: emojiObject.emoji,
+      postId: post.id,
+      reactedUserId: props.localUserId
+    }
+    fetchEmojiClick(postBody)
+    togglePicker(post.id)
+    props.callback(Math.random())
+  };
+
+  const fetchEmojiClick = (data) => {
+    postsAPI.reactWithEmoji(data);
+  }
+
+  const togglePicker = (postId) => {
+    if (toggledPickers.includes(postId)) {
+      setToggledPickers(toggledPickers.filter(it => it !== postId));
+    } else {
+      setToggledPickers([...toggledPickers, postId]);
+    }
+  }
+
+  const toggleReaction = (postId, emoji, reactedUserId) => {
+    //console.log(reactions)
+    const postBody = {
+      postId: postId,
+      reaction: emoji,
+      reactedUserId: props.localUserId
+    }
+    fetchEmojiClick(postBody)
+    // const reactionsCopy = JSON.parse(JSON.stringify(reactions))
+    //
+    // const filteredReactions = reactionsCopy.filter((it) => {
+    //   return (it.postId === postId && it.userId === props.userId) && it.reactions
+    // }).filter((item) => {
+    //   return item => (item.reaction === emoji) && (item.users_ids.includes(props.userId))
+    // })
+    //
+    // const neededPost = filteredReactions[0];
+    // console.log(neededPost.reactions)
+    //
+    // //const preResult = neededPost.reactions.filter((it) => it.users_ids.includes(props.userId) && (it.reaction === emoji))
+    // neededPost.reactions.filter((it) => users_ids ).filter((it) => it !== props.userId)
+    // console.log(neededPost)
+    props.callback(Math.random())
+    // getUserPosts(props.userId)
+  }
+
   return (
     <div>
       {
@@ -50,17 +114,24 @@ const Posts = ({ posts }) => {
               <div className="item-comment__smiles smiles">
                 {
                   post.reactions && post.reactions.map((r) => (
-                    <div className="smiles__item active-smile">
+                    <div className={`smiles__item ` + `${r.users_ids.includes(props.localUserId) ? 'active-smile' : ''}`} onClick={() => toggleReaction(post.id, r.reaction)}>
                       {r.reaction}️ <span>{r.users_ids.length}</span>
                     </div>
                   ))
                 }
-                <div className="smiles__item">
-                  + <span>Add</span>
+                {
+                  toggledPickers.includes(post.id) ? (
+                    <Picker
+                      onEmojiClick={(event,emojiObject) => onEmojiClick(event, emojiObject, post)}
+                      disableAutoFocus={true}
+                      groupNames={{ smileys_people: "PEOPLE" }}
+                      native={true}
+                    />
+                  ) : null
+                }
+                <div className="smiles__item" onClick={() => togglePicker(post.id)}>
+                  {toggledPickers.includes(post.id) ? <span>x Close</span> : <span>+ Add</span>}
                 </div>
-                {/*<div class="smiles__item-btn icon-smile">*/}
-                {/*<img src="https://pngimg.com/uploads/smiley/smiley_PNG149.png" alt="">*/}
-                {/*</div>*/}
               </div>
             </div>
           </div>

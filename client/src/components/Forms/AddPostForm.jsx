@@ -32,7 +32,7 @@ const AddPostForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const postData = {...symptoms, comment, reactions: null, user_id: props.userId}
+    const postData = {...symptoms, comment, reactions: [], user_id: props.userId}
     props.createPost(postData);
     props.closeModalRef();
   }

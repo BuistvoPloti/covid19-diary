@@ -24,7 +24,7 @@ const ProfileContainer = (props) => {
   const [localUser, setLocalUser] = useState({});
 
   useEffect(() => {
-    props.getUserPosts(props.match.params.id)
+    //props.getUserPosts(props.match.params.id)
     fetch(`http://localhost:3022/users/qqq/${props.match.params.id}`)
       .then((res) => res.json())
       .then((userResponse) => setLocalUser(userResponse.data.user))
@@ -70,7 +70,7 @@ const ProfileContainer = (props) => {
             ) : null
           }
           <h2>Latest posts</h2>
-          <PostsContainer userId={props.match.params.id} posts={props.posts}/>
+          <PostsContainer userId={props.match.params.id} localUserId={props.user.id} posts={props.posts} getUserPosts={props.getUserPosts}/>
         </div> : <div>Loading</div>
       }
     </div>
