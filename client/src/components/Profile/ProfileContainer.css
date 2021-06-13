@@ -1,0 +1,15 @@
+.add-post-btn {
+    border: 1px solid #007AFF;
+    padding: 10px 10px 10px 10px;
+    width: 88px;
+    height: 50px;
+    color: #007AFF;
+    border-radius: 32px;
+    cursor: pointer;
+    float: right;
+}
+
+.add-post-btn:hover {
+    background-color: #007AFF;
+    color: white;
+}

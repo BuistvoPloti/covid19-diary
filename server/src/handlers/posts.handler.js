@@ -11,7 +11,7 @@ const createPost = async (req, res, next) => {
     if (req.session.user_id !== user_id) {
       throwCustomException("User is not authenticated to add post") // todo may be move to middleware + after auth protection for routed
     }
-    const postBody = { ...req.body, reactions: null };
+    const postBody = { ...req.body, reactions: [] };
     const post = await postsService.createPost(postBody);
     return handleSuccessResponse({ post }, res);
   } catch (err) {

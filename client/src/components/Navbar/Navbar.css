@@ -5,3 +5,23 @@
     padding-right: 5px;
     min-width: 330px;
 }
+
+.navbar-link {
+    text-align: center;
+    height: 64px;
+    font-size: 28px;
+    color: green;
+    margin-top:5px
+}
+
+.link {
+    color: black;
+}
+
+.navbar-link:hover {
+    background: #70B5FF;
+}
+
+.active {
+    background: #70B5FF;
+}

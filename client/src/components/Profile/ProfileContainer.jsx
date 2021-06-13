@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {getUserPosts} from "../../redux/Posts/posts.reducer";
 import AddPostForm from "../Forms/AddPostForm";
 import Modal from 'react-modal';
+import "./ProfileContainer.css";
 
 const customStyles = {
   content : {
@@ -54,7 +55,7 @@ const ProfileContainer = (props) => {
           {
             localUser.id === props.user.id ? (
               <>
-                <button onClick={openModal}>New Post</button>
+                <button className="add-post-btn" onClick={openModal}>New Post</button>
                 <Modal
                   isOpen={modalIsOpen}
                   onAfterOpen={afterOpenModal}
@@ -62,9 +63,8 @@ const ProfileContainer = (props) => {
                   style={customStyles}
                   contentLabel="Example Modal"
                 >
-                  <h2 ref={_subtitle => (subtitle = _subtitle)}>Add post</h2>
+                  <h2 ref={_subtitle => (subtitle = _subtitle)}></h2>
                   <AddPostForm userId={props.user.id} closeModalRef={closeModal}/>
-                  <button onClick={closeModal}>close</button>
                 </Modal>
               </>
             ) : null

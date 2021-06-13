@@ -51,22 +51,7 @@ const Posts = ({ posts, getUserPosts, ...props}) => {
       reactedUserId: props.localUserId
     }
     fetchEmojiClick(postBody)
-    // const reactionsCopy = JSON.parse(JSON.stringify(reactions))
-    //
-    // const filteredReactions = reactionsCopy.filter((it) => {
-    //   return (it.postId === postId && it.userId === props.userId) && it.reactions
-    // }).filter((item) => {
-    //   return item => (item.reaction === emoji) && (item.users_ids.includes(props.userId))
-    // })
-    //
-    // const neededPost = filteredReactions[0];
-    // console.log(neededPost.reactions)
-    //
-    // //const preResult = neededPost.reactions.filter((it) => it.users_ids.includes(props.userId) && (it.reaction === emoji))
-    // neededPost.reactions.filter((it) => users_ids ).filter((it) => it !== props.userId)
-    // console.log(neededPost)
     props.callback(Math.random())
-    // getUserPosts(props.userId)
   }
 
   return (
@@ -110,6 +95,12 @@ const Posts = ({ posts, getUserPosts, ...props}) => {
                 {post.rash ? <div className="health__item">Rash</div> : null }
                 {post.difficulty_breathing ? <div className="health__item">Difficulty breathing</div> : null }
                 {post.nausea ? <div className="health__item">Nausea</div> : null }
+                {
+                  (post.fever || post.dry_cough || post.tiredness || post.loss_of_taste_or_smell || post.sore_throat
+                    || post.conjunctivitis || post.headache || post.vomiting || post.chest_pain_or_pressure
+                    || post.fatigue || post.chills || post.rash || post.difficulty_breathing || post.nausea
+                  ) ? null : <div className="health__item" style={{'background-color': '#34C759'}}>No symptoms</div>
+                }
               </div>
               <div className="item-comment__smiles smiles">
                 {
